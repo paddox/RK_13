@@ -1,0 +1,57 @@
+
+<html>
+<body>
+<script>
+	function line(ctx,x1,x2,y1,y2){
+				var deltaX = Math.abs(x2 - x1);
+    			var deltaY = Math.abs(y2 - y1);
+    			var signX = x1 < x2 ? 1 : -1;
+    			var signY = y1 < y2 ? 1 : -1;
+    			var error = deltaX - deltaY;
+    			ctx.fillRect(x2, y2,1,1);
+    			while(x1 != x2 || y1 != y2) {
+        			ctx.fillRect(x1, y1,1,1);
+        			var error2 = error * 2;
+        			//
+        			if(error2 > -deltaY) {
+            			error -= deltaY;
+            			x1 += signX;
+        			}
+        			if(error2 < deltaX) {
+            			error += deltaX;
+            			y1 += signY;
+        			}
+    			}
+    }
+</script>
+<p>Вариант 13.</p>
+<p>С помощью алгоритма Брезенхема построить отрезок прямой с координатами А(100,0) и В(23,100).</p>
+<canvas id='rk' width="101" height="101">
+	<script>
+		var canvas=document.getElementById('rk');
+		var ctx=canvas.getContext('2d');
+		line(ctx,100,23,0,100);
+	</script>
+</canvas>
+<p>В массиве записаны х-координаты точек отрезков фигуры. Необходимо построить отрезки прямых, которые получаются
+при заполнении фигуры методом пересечения с горизонтальными линиями</p>
+<canvas id='rk2' width="101" height="101">
+	<script>
+		var canvas=document.getElementById('rk2');
+		var ctx=canvas.getContext('2d');
+		var A= [1,50,51,52,58,61,78,79,80,97];
+		function otrezki(A,y)
+    	{
+    		for (i=0;i<A.length-1;i++)
+    			{
+    				if (A[i]%2==1 && A[i+1]%2==0 && Math.abs(A[i]-A[i+1])>1)
+    				{
+    					line(ctx,A[i],A[i+1],y,y);}
+    				}
+    	}
+
+		otrezki(A,5);
+	</script>
+</canvas>
+</body>
+</html>
